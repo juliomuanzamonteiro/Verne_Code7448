@@ -1,0 +1,5 @@
+Verne_Code7448          KEYWORD1
+digito                  KEYWORD2
+contagemProgressiva     KEYWORD3
+contagemRegressiva      KEYWORD4
+tipoContagem            KEYWORD4
