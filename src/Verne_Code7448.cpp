@@ -14,10 +14,10 @@
 // Construtor
 Verne_Code7448::Verne_Code7448(int d, int c, int b, int a)
 {
-	pinCode[0] = d;
-	pinCode[1] = c;
-	pinCode[2] = b;
-	pinCode[3] = a;
+	pinCode[0] = a;
+	pinCode[1] = b;
+	pinCode[2] = c;
+	pinCode[3] = d;
 
 	// Configurar os pinos como saída
 	for (int i = 0; i < pinos; i++)
