@@ -1,7 +1,7 @@
 /*
 	Nome: Verne_Code7448
 	Copyright: Verne_Code7448
-	Versão 1.0.1
+	Versão 1.1.1
 	Autor: Júlio Muanza Monteiro
 	Data: 11/04/26 20:26
 	Descrição: Controle do decodificador 7448
@@ -26,7 +26,7 @@ enum digitos { // Digito para a contagem
 	NOVE 		// dígito 9
 };
 
-enum typeCont { // tipo de contagem
+enum type { // tipo de contagem
 	PROGRESS, 		// Progressiva
 	REGRESS 		// Regressiva
 };
@@ -53,9 +53,12 @@ class Verne_Code7448
 
 		void cont_regress(int digito); // Fazer contagem regressiva de 9-0
 
-		void cont(int digito, int type_cont, int time); // Escolhe o tipo de contagem entre progressiva ou regressiva
+		void cont(int digito, type type_cont, int time); // Escolhe o tipo de contagem entre progressiva ou regressiva
 
-		void clear();
+		void clear(); // Limpar display
+
+		void error(); // Erro - Retorna t para erro
+
 };
 
 #endif // VERNE_CODE_7448_H
