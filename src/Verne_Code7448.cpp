@@ -1,7 +1,7 @@
 /*
 	Nome: Verne_Code7448
 	Copyright: Verne_Code7448
-	Versão 1.0.0
+	Versão 1.0.1
 	Autor: Júlio Muanza Monteiro
 	Data: 11/04/26 20:26
 	Descrição: Controle do decodificador 7448
@@ -11,7 +11,7 @@
 #include "Verne_Code7448.h"
 
 
-// Construtor
+// Construtor  Verne_Code7448
 Verne_Code7448::Verne_Code7448(int d, int c, int b, int a)
 {
 	pinCode[0] = a;
@@ -19,7 +19,7 @@ Verne_Code7448::Verne_Code7448(int d, int c, int b, int a)
 	pinCode[2] = c;
 	pinCode[3] = d;
 
-	// Configurar os pinos como saída
+	// Configurar os pinos do decodificador como saída
 	for (int i = 0; i < pinos; i++)
 	{
 		pinMode(pinCode[i], OUTPUT);
@@ -28,9 +28,10 @@ Verne_Code7448::Verne_Code7448(int d, int c, int b, int a)
 
 
 // Mostrar digito
-void Verne_Code7448::digito(int digito)
+void Verne_Code7448::digito(int digito) 
 {
-	if(digito < 0 || digito > 9) return; // Não faz nada
+	if(digito < 0 || digito > 9) 
+	return Verne_Code7448::error(); // Retorna t para erro
 	
 	for (int byte = 0; byte < pinos; byte++)
 	{
@@ -42,8 +43,11 @@ void Verne_Code7448::digito(int digito)
 
 
 // Contagem de 0-9
-void Verne_Code7448::contagemProgressiva(int digito)
+void Verne_Code7448::cont_progress(int digito) 
 {
+	if (digito < 0 || digito > 9) 
+	return Verne_Code7448::error(); // Retorna t para erro
+
 	for (int conta = 0; conta <= digito; conta++)
 	{
 		// Conversão da base decimal para binária
@@ -59,8 +63,11 @@ void Verne_Code7448::contagemProgressiva(int digito)
 
 
 // Contagem regressiva de 9-0
-void Verne_Code7448::contagemRegressiva(int digito)
+void Verne_Code7448::cont_regress(int digito) 
 {
+	if (digito < 0 || digito > 9) 
+	return Verne_Code7448::error(); // Retorna t para erro
+
 	for (digito; digito >= 0; digito--)
 	{
 		for (int byte = 0; byte < pinos; byte++)
@@ -75,9 +82,12 @@ void Verne_Code7448::contagemRegressiva(int digito)
 
 
 // Contagem progressiva (0-9) ou regressiva (0-9)
-void Verne_Code7448::tipoContagem(int digito, bool estadoContagem)
+void Verne_Code7448::cont(int digito, type type_cont, int time)
 {
-	if (estadoContagem == true)
+	if ((digito < 0 || digito > 9) || (type_cont != PROGRESS && type_cont != REGRESS)) 
+	return Verne_Code7448::error(); // Retorna t para erro
+
+	if (type_cont == PROGRESS) // Realiza a contagem progressiva
 	{
 		for (int conta = 0; conta <= digito; conta++)
 		{
@@ -88,10 +98,10 @@ void Verne_Code7448::tipoContagem(int digito, bool estadoContagem)
 				// Para fazer a conversão de decimal para binário
 				digitalWrite(pinCode[byte], ((conta >> byte) & 1));
 			}
-			delay(1000);
+			delay(time);
 		}
 	}
-	else
+	else if (type_cont == REGRESS) // Realiza a contagem regressiva
 	{
 		for (digito; digito >= 0; digito--)
 		{
@@ -101,17 +111,28 @@ void Verne_Code7448::tipoContagem(int digito, bool estadoContagem)
 				// Para fazer a conversão de decimal para binário
 				digitalWrite(pinCode[byte], ((digito >> byte) & 1));
 			}
-			delay(1000);
+			delay(time);
 		}
 	}
 
 }
 
-// Limpar - Zera o display
-void Verne_Code7448::limpar() {
-	for(int i = 0; i < pinos; i++)
+
+// Limpar o display - desliga todos seguimentos
+void Verne_Code7448::clear() 
+{
+	for(int byte = 0; byte < pinos; byte++)
 	{
-		digitalWrite(pinCode[i], LOW);
+		digitalWrite(pinCode[byte], HIGH);
 	}
 	
+}
+
+
+// Imprime t para erro no display
+void Verne_Code7448::error() {
+	for (int byte = 0; byte < pinos; byte++)
+	{
+		digitalWrite(pinCode[byte], (14 >> byte & 1));
+	}
 }
