@@ -15,15 +15,16 @@ O decodificador é inicializado pelo criação de uma istância da classe Verne_
 Verne_Code7448 code(pinD, pinC, pinB, pinA);
 ```
 
-Para imprimir um dígito no display, você apenas chama o método `digito(valor)` e se o valor for maior que 9 vai aparecer deformado ou nem vai aparecer nada.
+Para imprimir um dígito no display, você apenas chama o método `digito(int digito)` e se o valor for maior que 9 vai aparecer deformado ou nem vai aparecer nada.
 
-Para fazer contagem progressiva, você apenas chama o método `contagemProgessiva(valor)` a contagem vai de 0 a valor.
+Para fazer contagem progressiva, você apenas chama o método `cont_progress(int digito)` a contagem vai de 0 a valor.
 
-Para fazer contagem regressiva, você apenas chama o método `contagemRegessiva(valor)` a contagem vai de valor a 0.
+Para fazer contagem regressiva, você apenas chama o método `cont_regress(int digito)` a contagem vai de valor a 0.
 
-Para escolher o tipo de contagem (prog. ou reg.), você apenas chama o método `tipoContagem(valor, estado)` se estado for igual a `true`-contagem progressiva caso seja igual a `false`-contagem Regressiva.
+Para escolher o tipo de contagem (prog. ou reg.), você apenas chama o método `cont(valor, type type_cont, time)` se type_cont for igual a `PROGRESS`-contagem progressiva caso seja igual a `REGRESS`-contagem Regressiva.
 
 OBS: Para não houver má impressão dos dígitos utilize dígitos de 0 a 9.
+Se forem introduzidos valores inválidos, retorna t no display para erro.
 
 ## Exemplo
 
@@ -35,29 +36,36 @@ Para utilizar o mesmo é necessário dos seguintes mateirais:
 ```c
 #include <Verne_Code7448.h>
 
-Verne_Code7448 code(2, 3, 4, 5);
-
-int digito = 9;
-bool estado = true;
+// Criando um instância display do tipo Verne_Code7448
+Verne_Code7448 display(2, 3, 4, 5);
 
 void setup() {
 }
 
-void loop() {
-  code.digito(6); // imprime 6 no display
+void loop() 
+{
+  // Realiza uma contagem regressiva de 9-0 como tempo de troca entre dígitos de 1s
+  display.cont(9, PROGRESS, 200);
+
+  // Imprime digitos direitos no display
+  display.digito(3);  // dígito 3
   delay(1000);
-  code.digito(9); // imprime 9 no display
+  display.digito(UM);  // dígito 1
   delay(1000);
-  code.digito(3); // imprime 3 no display
+  display.digito(4);  // dígito 4
+  delay(1000);
+  display.digito(OITO);  // dígito 8
   delay(1000);
 
-  estado = true;
-  code.tipoContagem(digito, estado); // Realiza um contagem de 0 a 9
-  delay(3000);
-  estado = false;
-  code.tipoContagem(digito, estado); // Realiza um contagem de 9 a 0
-  delay(3000);
+  display.clear(); // Limpa o display
+  delay(1000);
+
+  /*
+  display.cont_regress(3); // Contagem regressiva
+  display.cont_progress(8); // Contagem progressiva
+  */
 }
+
 ```
 ## Proprietário
 Júlio Muanza Monteiro
