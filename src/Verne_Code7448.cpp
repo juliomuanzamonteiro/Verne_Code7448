@@ -1,7 +1,7 @@
 /*
 	Nome: Verne_Code7448
 	Copyright: Verne_Code7448
-	Versão 1.0.1
+	Versão 1.1.1
 	Autor: Júlio Muanza Monteiro
 	Data: 11/04/26 20:26
 	Descrição: Controle do decodificador 7448
