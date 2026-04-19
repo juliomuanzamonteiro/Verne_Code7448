@@ -12,7 +12,7 @@ Está biblioteca serve para controlar o decodificador 7448.
 
 O decodificador é inicializado pelo criação de uma istância da classe Verne_Code7448 e com 4 parámetros que são os pinos D, C, B e A.
 ```C
-Verne_Code7448 code(pinD, pinC, pinB, pinA);
+Verne_Code7448 display(pinD, pinC, pinB, pinA);
 ```
 
 Para imprimir um dígito no display, você apenas chama o método `digito(int digito)` e se o valor for maior que 9 vai aparecer deformado ou nem vai aparecer nada.
