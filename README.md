@@ -1,5 +1,5 @@
 # Verne_Code7448
-Biblioteca para controlar o descodificador 7448
+Biblioteca para controlar display de 7 seguimentos através do descodificador 7448
 
 # Biblioteca para Arduino/ESP32 Verne_Code7448.
 
